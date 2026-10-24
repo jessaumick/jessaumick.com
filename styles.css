@@ -1,0 +1,41 @@
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.mw-empty-elt {
+    display: none;
+}
+
+#article {
+    white-space: normal;
+    border: 1px solid #ccc;
+    padding: 10px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+#guessBox, #titleGuess {
+     margin-top: 10px;
+}
+
+#guesses {
+    display: flex;
+    flex-direction: column;
+}
+        
+#main-content {
+    display: flex;
+    flex-direction: row-reverse;
+}
+        
+#reveal {
+    margin: auto;
+    }
+
+@media only screen and (max-width: 480px) {
+    .main-content {
+            display: flex;
+            flex-direction: column;
+    }
+}
