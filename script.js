@@ -10,13 +10,13 @@ console.log("Script loaded");
 
 // Fetch a random Wikipedia article based on currentCategory
 // Log the full API response in case of errors
-async function fetchArticle() {
+async function fetchArticle(retriesLeft = 3) {
     try {
         console.log("Fetching article...");
 
         // Fetch articles from the current category category
         const category = encodeURIComponent(currentCategory);
-        const apiUrl = `https://en.wikipedia.org/w/api.php?action=query&list=categorymembers&cmtitle=Category:${category}&cmlimit=500&format=json&origin=*`;
+        const apiUrl = `https://en.wikipedia.org/w/api.php?action=query&list=categorymembers&cmtitle=Category:${category}&cmlimit=500&cmnamespace=0&format=json&origin=*`;
 
         const response = await fetch(apiUrl);
         const data = await response.json();
@@ -52,6 +52,11 @@ async function fetchArticle() {
 
         const page = Object.values(articleData.query.pages)[0];
         if (!page.extract) {
+            // Occasionally an article has no intro text; pick another one
+            if (retriesLeft > 0) {
+                console.warn(`No extract for "${articleTitle}", retrying...`);
+                return fetchArticle(retriesLeft - 1);
+            }
             console.error("Extract not found.");
             document.getElementById('article').innerText = "Extract not found.";
             return;
@@ -123,6 +128,9 @@ function guessWord() {
     const list = document.getElementById('guessList');
     const item = document.createElement('li');
     item.textContent = guess;
+    if (originalHtml.toLowerCase().includes(guess.toLowerCase())) {
+        item.classList.add('correct');
+    }
     list.prepend(item);
 
     guessedWords.push(guess); // Add the new guess to the list of guessed words

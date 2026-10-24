@@ -1,6 +1,25 @@
+@font-face {
+    font-family: Bagnard;
+    src: url('./fonts/GeneralSans-Medium.woff2')
+}
+
 body {
+    max-width: 1280px;
+    margin: auto;
     display: flex;
     flex-direction: column;
+    color: #10100E;
+}
+
+h1 {
+    font-family: Bagnard;
+    font-weight: 400;
+    font-size: 42px;
+}
+
+li.correct {
+    color: green;
+    font-weight: bold;
 }
 
 .mw-empty-elt {
@@ -27,6 +46,7 @@ body {
 #main-content {
     display: flex;
     flex-direction: row-reverse;
+    gap: 24px;
 }
         
 #reveal {
