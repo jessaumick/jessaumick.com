@@ -6,9 +6,9 @@ let blockedTitle = '';
 const currentCategory = 'Drug_culture'; // Default category is now Drug culture
 const commonWords = ['the', 'and', 'is', 'in', 'it', 'to', 'of', 'a', 'with']; // Common words to not block
 
-console.log("Script loaded"); // Check if script is being loaded
+console.log("Script loaded");
 
-// Fetch a random Wikipedia article based on the "Drug culture" category
+// Fetch a random Wikipedia article based on currentCategory
 // Log the full API response in case of errors
 async function fetchArticle() {
     try {
