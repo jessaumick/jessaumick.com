@@ -10,20 +10,20 @@
 <body>
     <h1>weirdle</h1>
     <div id="main-content">
-        <div id="article">Loading article...</div>
+        <div id="wrapper">
+            <div id="article">Loading article...</div>
+                <div id="reveal">
+                    <button onclick="revealArticle()">Reveal Article</button>
+                    <div id="result"></div>
+                </div>
+        </div>
         <div id="guesses">
-            <input type="text" id="guessBox" placeholder="Guess a word">
+            <input type="text" maxlength="30" id="guessBox" placeholder="Guess a word">
             <button onclick="guessWord()">Guess Word</button>
             <ul id="guessList"></ul>
         </div>
     </div>
-    <div id="reveal">
-        <input type="text" id="titleGuess" placeholder="Guess the title">
-        <button onclick="guessTitle()">Guess Title</button>
-        <br><br>
-        <button onclick="revealArticle()">Reveal Article</button>
-            <div id="result"></div>
-        </div>
+
 
     <script src="script.js"></script>
 </body>

@@ -1,4 +1,3 @@
-// Global variables
 let originalHtml = '';
 let blockedHtml = '';
 let articleTitle = '';
@@ -6,7 +5,7 @@ let blockedTitle = '';
 const currentCategory = 'Drug_culture';
 const commonWords = ['the', 'and', 'is', 'in', 'it', 'to', 'of', 'a', 'with']; // Common words to not block
 
-console.log("Script loaded");
+console.log("hi nerds");
 
 // Fetch a random Wikipedia article based on currentCategory
 // Log the full API response in case of errors
@@ -105,15 +104,22 @@ function blockWords() {
     blockedHtml = tempDiv.innerHTML;
 }
 
-// Block text function for titles
+// Block text function for titles, leaving common and guessed words visible
 function blockText(text) {
     return text.replace(/\b\w+\b/g, (word) => {
-        if (commonWords.includes(word.toLowerCase())) {
+        const lower = word.toLowerCase();
+        if (commonWords.includes(lower) || guessedWords.includes(lower)) {
             return word;
         } else {
             return '█'.repeat(word.length);
         }
     });
+}
+
+// The puzzle is solved once every word in the title has been guessed
+function isSolved() {
+    const titleWords = articleTitle.toLowerCase().match(/\b\w+\b/g) || [];
+    return titleWords.every(w => commonWords.includes(w) || guessedWords.includes(w));
 }
 
 // Array to store correctly guessed words
@@ -164,27 +170,22 @@ function guessWord() {
 
     blockedHtml = tempDiv.innerHTML;
 
+    if (isSolved()) {
+        revealArticle();
+        document.getElementById('result').innerHTML = `
+            <center><p>You got it!</p><p><a href="https://en.wikipedia.org/wiki/${encodeURIComponent(articleTitle)}" target="_blank">${articleTitle}</a></p></center>
+        `;
+        document.getElementById('guessBox').disabled = true;
+        return;
+    }
+
+    blockedTitle = blockText(articleTitle);
     document.getElementById('article').innerHTML = `
         <h2 style="text-align: center;">${blockedTitle}</h2>
         ${blockedHtml}
     `;
 
     document.getElementById('guessBox').value = '';
-}
-
-
-// Handle title guess
-function guessTitle() {
-    const guess = document.getElementById('titleGuess').value.trim();
-    if (guess.toLowerCase() === articleTitle.toLowerCase()) {
-        document.getElementById('result').innerHTML = `
-            <p>You got it!</p>
-            <p>Article Title: <a href="https://en.wikipedia.org/wiki/${encodeURIComponent(articleTitle)}" target="_blank">${articleTitle}</a></p>
-        `;
-        document.getElementById('article').innerHTML = originalHtml; // Reveal full article
-    } else {
-        document.getElementById('result').innerText = "Incorrect title guess, try again!";
-    }
 }
 
 // Reveal the entire article

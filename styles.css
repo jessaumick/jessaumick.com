@@ -11,6 +11,12 @@ body {
     color: #10100E;
 }
 
+#wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
 h1 {
     font-family: Bagnard;
     font-weight: 400;
