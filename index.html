@@ -41,6 +41,7 @@
             }
         }
     </style>
+
 </head>
 <body>
     <h1 style="text-align: center">Weirdle</h1>
@@ -49,13 +50,14 @@
         <div id="guesses">
             <input type="text" id="guessBox" placeholder="Guess a word">
             <button onclick="guessWord()">Guess Word</button>
+            <ul id="guessList"></ul>
         </div>
     </div>
-        <div id="reveal">
-            <input type="text" id="titleGuess" placeholder="Guess the title">
-            <button onclick="guessTitle()">Guess Title</button>
-            <br><br>
-            <button onclick="revealArticle()">Reveal Article</button>
+    <div id="reveal">
+        <input type="text" id="titleGuess" placeholder="Guess the title">
+        <button onclick="guessTitle()">Guess Title</button>
+        <br><br>
+        <button onclick="revealArticle()">Reveal Article</button>
             <div id="result"></div>
         </div>
 

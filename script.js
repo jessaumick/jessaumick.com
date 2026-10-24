@@ -3,7 +3,7 @@ let originalHtml = '';
 let blockedHtml = '';
 let articleTitle = '';
 let blockedTitle = '';
-const currentCategory = 'Drug_culture'; // Default category is now Drug culture
+const currentCategory = 'Drug_culture';
 const commonWords = ['the', 'and', 'is', 'in', 'it', 'to', 'of', 'a', 'with']; // Common words to not block
 
 console.log("Script loaded");
@@ -14,7 +14,7 @@ async function fetchArticle() {
     try {
         console.log("Fetching article...");
 
-        // Fetch articles from the "Drug culture" category
+        // Fetch articles from the current category category
         const category = encodeURIComponent(currentCategory);
         const apiUrl = `https://en.wikipedia.org/w/api.php?action=query&list=categorymembers&cmtitle=Category:${category}&cmlimit=500&format=json&origin=*`;
 
@@ -120,7 +120,11 @@ function guessWord() {
     if (!guess || guessedWords.includes(guess)) {
         return; // If the guess is empty or already guessed, do nothing
     }
-    
+    const list = document.getElementById('guessList');
+    const item = document.createElement('li');
+    item.textContent = guess;
+    list.prepend(item);
+
     guessedWords.push(guess); // Add the new guess to the list of guessed words
     const regex = new RegExp(`\\b(${guessedWords.join('|')})\\b`, 'gi');
 
@@ -166,7 +170,7 @@ function guessTitle() {
     const guess = document.getElementById('titleGuess').value.trim();
     if (guess.toLowerCase() === articleTitle.toLowerCase()) {
         document.getElementById('result').innerHTML = `
-            <p>Congratulations! You've guessed the article title!</p>
+            <p>You got it!</p>
             <p>Article Title: <a href="https://en.wikipedia.org/wiki/${encodeURIComponent(articleTitle)}" target="_blank">${articleTitle}</a></p>
         `;
         document.getElementById('article').innerHTML = originalHtml; // Reveal full article
